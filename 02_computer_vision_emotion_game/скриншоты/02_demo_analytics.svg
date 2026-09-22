@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920">
+  <rect width="1400" height="920" fill="#07111f"/>
+  <rect x="80" y="70" width="1240" height="780" rx="24" fill="#0f172a" stroke="#334155" stroke-width="3"/>
+  <circle cx="125" cy="112" r="10" fill="#fb7185"/><circle cx="158" cy="112" r="10" fill="#fbbf24"/><circle cx="191" cy="112" r="10" fill="#34d399"/>
+  <text x="240" y="122" font-family="Arial" font-size="26" fill="#94a3b8">MirMe analytics — демонстрационные данные</text>
+  <g font-family="Menlo, monospace" font-size="27" fill="#e2e8f0">
+    <text x="135" y="205">ОТЧЁТ ПО СЕССИЯМ MIRME</text>
+    <text x="135" y="250" fill="#94a3b8">12 сессий · 92 задания · общий успех 61%</text>
+    <text x="135" y="325">Радость</text><text x="390" y="325" fill="#34d399">████████░░ 87%  (20/23)</text>
+    <text x="135" y="380">Удивление</text><text x="390" y="380" fill="#60a5fa">█████░░░░░ 50%  (7/14)</text>
+    <text x="135" y="435">Грусть</text><text x="390" y="435" fill="#a78bfa">██████░░░░ 62%  (8/13)</text>
+    <text x="135" y="490">Злость</text><text x="390" y="490" fill="#fb923c">███████░░░ 70%  (14/20)</text>
+    <text x="135" y="545">Отвращение</text><text x="390" y="545" fill="#f472b6">███░░░░░░░ 32%  (7/22)</text>
+    <text x="135" y="635" fill="#94a3b8">Последние сессии</text>
+    <text x="135" y="690">18.09  ✓ Радость  ✓ Злость  ✓ Грусть  → 10/12</text>
+    <text x="135" y="740">20.09  ✓ Грусть   ✗ Отвращение       →  7/10</text>
+    <text x="135" y="790">21.09  ✓ Радость  ✓ Удивление        →  4/4</text>
+  </g>
+</svg>
+

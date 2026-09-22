@@ -1,0 +1,21 @@
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets*.json
+
+# Generated or private runtime data
+**/data/*.jsonl
+**/reports/*.tmp
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+# Large local models are intentionally excluded
+**/models/*.onnx
+**/models/*.pt
+**/models/*.pth

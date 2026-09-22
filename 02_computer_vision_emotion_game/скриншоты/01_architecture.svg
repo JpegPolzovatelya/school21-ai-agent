@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#172554"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-opacity=".24"/></filter>
+    <style>.title{font:700 52px Arial;fill:#fff}.sub{font:24px Arial;fill:#bfdbfe}.card{fill:#fff;rx:22;filter:url(#shadow)}.h{font:700 27px Arial;fill:#0f172a}.p{font:21px Arial;fill:#334155}.arrow{stroke:#60a5fa;stroke-width:8;fill:none;marker-end:url(#a)}</style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="90" y="95" class="title">Computer Vision Emotion Game</text>
+  <text x="92" y="140" class="sub">Рабочий MVP: камера → распознавание эмоции → игровой результат → аналитика</text>
+  <g transform="translate(75 230)">
+    <rect class="card" width="270" height="210"/><text class="h" x="32" y="58">1. Камера</text><text class="p" x="32" y="103">Видео в реальном</text><text class="p" x="32" y="136">времени</text><text x="32" y="182" font-size="44">📷</text>
+  </g>
+  <path class="arrow" d="M365 335H465"/>
+  <g transform="translate(485 230)">
+    <rect class="card" width="270" height="210"/><text class="h" x="32" y="58">2. MediaPipe</text><text class="p" x="32" y="103">Детекция лица</text><text class="p" x="32" y="136">на кадре</text><text x="32" y="182" font-size="44">◎</text>
+  </g>
+  <path class="arrow" d="M775 335H875"/>
+  <g transform="translate(895 230)">
+    <rect class="card" width="270" height="210"/><text class="h" x="32" y="58">3. ONNX FER+</text><text class="p" x="32" y="103">5 эмоций +</text><text class="p" x="32" y="136">confidence score</text><text x="32" y="182" font-size="44">🙂</text>
+  </g>
+  <path class="arrow" d="M1185 335H1285"/>
+  <g transform="translate(1305 230)">
+    <rect class="card" width="220" height="210"/><text class="h" x="27" y="58">4. Игра</text><text class="p" x="27" y="103">Таймер, очки,</text><text class="p" x="27" y="136">обратная связь</text><text x="27" y="182" font-size="44">🎮</text>
+  </g>
+  <g transform="translate(205 560)">
+    <rect class="card" width="500" height="220"/><text class="h" x="38" y="58">Событийная аналитика</text><text class="p" x="38" y="105">JSONL: session_start, emotion_task,</text><text class="p" x="38" y="140">session_end, success, confidence</text><text class="p" x="38" y="182">Отчёт по эмоциям и динамике сессий</text>
+  </g>
+  <g transform="translate(895 560)">
+    <rect class="card" width="500" height="220"/><text class="h" x="38" y="58">Готовность MVP</text><text class="p" x="38" y="105">Python · OpenCV · MediaPipe · ONNX</text><text class="p" x="38" y="140">Telegram-отчёты · 58 тестов</text><text class="p" x="38" y="182">5 эмоций · локализация · fake data</text>
+  </g>
+  <path class="arrow" d="M1415 470V520H1125V545"/>
+  <path class="arrow" d="M1415 470V520H455V545"/>
+</svg>
+

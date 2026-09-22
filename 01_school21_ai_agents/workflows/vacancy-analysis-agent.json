@@ -1,0 +1,245 @@
+{
+  "name": "hh-ai-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.hh.ru/vacancies",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "area",
+              "value": "1"
+            },
+            {
+              "name": "professional_role",
+              "value": "160"
+            },
+            {
+              "name": "per_page",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -100,
+        -40
+      ],
+      "id": "d3947c9e-304e-44a4-a453-b338a3c733a6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        40,
+        -40
+      ],
+      "id": "4b793e0f-f7f0-4573-9d83-4c61a38c37a6",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        -40
+      ],
+      "id": "57b371a2-9cec-48d5-80ea-63637554ed3f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Ты — ассистент по анализу вакансий. Твоя задача — обработать описания 10 вакансий по заданному направлению DevOps и сформировать краткий еженедельный дайджест в следующем формате:\n\nНа этой неделе я спарсил N свежих вакансий по выбранному тобой направлению. Самыми популярными являются следующие требования:\n\nтребование 1: количество раз\nтребование 2: количество раз\nтребование 3: количество раз\n… \n\nИнструкции по обработке:\n\nДля каждой вакансии извлеки ключевые навыки и технологии из её описания (разделы вроде «Требования», «Мы ожидаем», «Необходимо знать» и т.п.).\nПриведи каждый извлеченный навык к единому нормативному виду. Примеры нормализации:\n«питон», «Python 3», «python» → python\n«JS», «JavaScript», «ECMAScript» → javascript\n«React.js», «ReactJS», «react» → react\n«SQL», «PostgreSQL», «MySQL» → оставляй как есть, если указан конкретный диалект; если просто «работа с базами данных» — не считай\n«Git», «git», «система контроля версий» → git\n«Docker», «docker-compose» → docker\n«REST API», «RESTful» → rest api\n«английский язык», «уровень B2», «английский B2 и выше» → английский язык\n«опыт работы», «стаж», «опыт от 2 лет» → опыт работы (но не учитывай обобщённые фразы без конкретики, если не указано чётко как требование)\nИгнорируй общие фразы вроде «коммуникабельность», «умение работать в команде», если они не являются техническими или профессиональными навыками.\nПосле обработки всех вакансий подсчитай частоту каждого нормализованного навыка и выбери топ-10 самых упоминаемых.\nВыведи результат строго в указанном формате, без дополнительных комментариев или пояснений.\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        460,
+        -40
+      ],
+      "id": "f8a6ab9d-7434-43d7-b889-f382ee93d150",
+      "name": "AI Agent",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "GigaChat/GigaChat-2-Max",
+          "mode": "list",
+          "cachedResultName": "GigaChat/GigaChat-2-Max"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        140
+      ],
+      "id": "b9e9fff8-a90e-46cb-b4ec-6187881f98e0",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "description"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -40
+      ],
+      "id": "53f3e8e9-2c95-4eb9-9712-627b2262bfe6",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "chatId": "<CHAT_ID>",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        760,
+        -40
+      ],
+      "id": "1a2ad333-88cb-4527-9eaa-2f2c0bc940ea",
+      "name": "Telegram1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        -40
+      ],
+      "id": "8ad7441a-ff1e-4bca-940f-1c5e6a64cf1e",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "YrKRTGQLZtpDxXYZ",
+  "tags": []
+}
